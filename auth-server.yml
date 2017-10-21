@@ -3,8 +3,8 @@ server:
   context-path: /auth-server
 eureka:
   instance:
-    hostname: ${ip-address}
-    ipAddress: ${ip-address}
+    hostname: ${ip.address}
+    ipAddress: ${ip.address}
     statusPageUrlPath: /auth-server/info
     healthCheckUrlPath: /auth-server/health
     preferIpAddress: true
@@ -18,24 +18,24 @@ spring:
     name: auth-server
   datasource:
     auth:
-      url: jdbc:mysql://${datasource.ip:172.16.10.160}:${datasource.port:3306}/auth?autoReconnect=true
-      username: ${datasource.username:byteuser}
-      password: ${datasource.password:bu}
+      url: jdbc:mysql://${datasource.ip}:${datasource.port:3306}/auth?autoReconnect=true
+      username: ${datasource.username}
+      password: ${datasource.password}
       driver-class-name: com.mysql.jdbc.Driver
     users:
-      url: jdbc:mysql://${datasource.ip:172.16.10.160}:${datasource.port:3306}/users?autoReconnect=true
-      username: ${datasource.username:byteuser}
-      password: ${datasource.password:bu}
+      url: jdbc:mysql://${datasource.ip}:${datasource.port:3306}/users?autoReconnect=true
+      username: ${datasource.username}
+      password: ${datasource.password}
       driver-class-name: com.mysql.jdbc.Driver
     profiles:
-      url: jdbc:mysql://${datasource.ip:172.16.10.160}:${datasource.port:3306}/profiles?autoReconnect=true
-      username: ${datasource.username:byteuser}
-      password: ${datasource.password:bu}
+      url: jdbc:mysql://${datasource.ip}:${datasource.port:3306}/profiles?autoReconnect=true
+      username: ${datasource.username}
+      password: ${datasource.password}
       driver-class-name: com.mysql.jdbc.Driver
     roles:
-      url: jdbc:mysql://${datasource.ip:172.16.10.160}:${datasource.port:3306}/roles?autoReconnect=true
-      username: ${datasource.username:byteuser}
-      password: ${datasource.password:bu}
+      url: jdbc:mysql://${datasource.ip}:${datasource.port:3306}/roles?autoReconnect=true
+      username: ${datasource.username}
+      password: ${datasource.password}
       driver-class-name: com.mysql.jdbc.Driver
     tomcat:
       initial-size: 10
