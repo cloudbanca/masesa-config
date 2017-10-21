@@ -1,0 +1,60 @@
+server:
+  port: 5002
+  context-path: /cotizador-service
+eureka:
+  instance:
+    hostname: ip-address
+    ipAddress: ip-address  
+    statusPageUrlPath: /cotizador-service/info
+    healthCheckUrlPath: /cotizador-service/health
+    preferIpAddress: true
+    metadata-map:
+      management.context-path: /cotizador-service
+  client:
+    serviceUrl:
+      defaultZone: http://registry:1111/eureka/
+spring:
+  application:
+    name: cotizador-service
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      id: api
+      token-info-uri: ${auth-server.url}/oauth/check_token
+      jwt:
+        key-uri: ${auth-server.url}/oauth/token_key
+auth-server:
+  url: http://auth-server:1116/auth-server
+logging:
+  level:
+    org.hibernate: INFO
+byte:
+  swagger:
+    api:
+      title: Cotizador Service
+      description: Documentacion API REST para cotizaciones
+      terms-of-service-url: http://www.bytesw.com
+      license: Byte
+      license-url: http://www.bytesw.com
+      version: 1.0.0
+      paths:
+        - /puntoDeVenta.*
+        - /distribuidor.*
+
+---
+
+spring:
+  profiles: docker
+auth-server:
+  url: http://auth-server:1116/auth-server
+
+---
+
+spring:
+  application:
+    name: depositos-service-bxi
+  profiles: docker-bxi
+auth-server:
+  url: http://auth-server:3002/auth-server

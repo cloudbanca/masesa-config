@@ -1,0 +1,100 @@
+server:
+  port: 1116
+  context-path: /auth-server
+eureka:
+  instance:
+    hostname: ip-address
+    ipAddress: ip-address  
+    statusPageUrlPath: /auth-server/info
+    healthCheckUrlPath: /auth-server/health
+    preferIpAddress: true
+    metadata-map:
+      management.context-path: /auth-server
+  client:
+    serviceUrl:
+      defaultZone: http://registry:1111/eureka/
+spring:
+  application:
+    name: auth-server
+  datasource:
+    auth:
+      url: jdbc:mysql://${datasource.ip:172.16.10.160}:${datasource.port:3306}/auth?autoReconnect=true
+      username: ${datasource.username:byteuser}
+      password: ${datasource.password:bu}
+      driver-class-name: com.mysql.jdbc.Driver
+    users:
+      url: jdbc:mysql://${datasource.ip:172.16.10.160}:${datasource.port:3306}/users?autoReconnect=true
+      username: ${datasource.username:byteuser}
+      password: ${datasource.password:bu}
+      driver-class-name: com.mysql.jdbc.Driver
+    profiles:
+      url: jdbc:mysql://${datasource.ip:172.16.10.160}:${datasource.port:3306}/profiles?autoReconnect=true
+      username: ${datasource.username:byteuser}
+      password: ${datasource.password:bu}
+      driver-class-name: com.mysql.jdbc.Driver
+    roles:
+      url: jdbc:mysql://${datasource.ip:172.16.10.160}:${datasource.port:3306}/roles?autoReconnect=true
+      username: ${datasource.username:byteuser}
+      password: ${datasource.password:bu}
+      driver-class-name: com.mysql.jdbc.Driver
+    tomcat:
+      initial-size: 10
+      min-idle: 15
+      max-idle: 20
+      max-active: 30
+      test-on-borrow: true
+      remove-abandoned: true
+      remove-abandoned-timeout: 35
+      validation-query: select 1
+      validation-interval: 30000
+      time-between-eviction-runs-millis: 40000
+      min-evictable-idle-time-millis: 60000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      id: api
+      token-info-uri: ${auth-server.url}/oauth/check_token
+      jwt:
+        key-uri: ${auth-server.url}/oauth/token_key
+auth-server:
+  url: http://auth-server:1116/auth-server
+  access-token-validity-seconds: 300000
+  refresh-token-validity-seconds: 600000
+  authentication:
+    enabled: true
+    failed-login-attempts: 3
+    days-validity-password: 10
+    user-inactivity-days: 10
+  jwt:
+    keystore: auth-server.jks
+    storepass: auth-server
+    alias: auth-alias
+liquibase:
+  context: production
+
+---
+
+spring:
+  profiles: docker
+eureka:
+  instance:
+    hostname: auth-server
+auth-server:
+  url : http://auth-server:1116/auth-server
+  access-token-validity-seconds: 300
+  refresh-token-validity-seconds: 600
+  authentication:
+    failed-login-attempts: 3
+    days-validity-password: 10
+    user-inactivity-days: 10
+  jwt:
+    keystore: auth-server.jks
+    storepass: auth-server
+    alias: auth-alias

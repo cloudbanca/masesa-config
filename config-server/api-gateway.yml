@@ -1,0 +1,72 @@
+server:
+  port: 8080
+eureka:
+  instance:
+    hostname: ip-address
+    ipAddress: ip-address
+    statusPageUrlPath: /api-gateway/info
+    healthCheckUrlPath: /api-gateway/health    
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://registry:1111/eureka/
+spring:
+  application:
+     name: api-gateway
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+zuul:
+  routes:
+    auth-server:
+      path: /api/auth-server/**
+    cotizador-service:
+      path: /api/cotizador-service/**
+      sensitive-headers: Cookie, Set-Cookie
+
+security:
+  basic:
+    enabled: false
+  oauth2:
+#    sso:
+#      login-path: /login
+#      filter-order: 1
+    client:
+      access-token-uri: ${auth-server.url}/oauth/token
+      user-authorization-uri: ${auth-server.url}/oauth/authorize
+      client-id: client
+      client-secret: secret
+      client-authentication-scheme: form
+    resource:
+      id: api
+      token-info-uri: ${auth-server.url}/oauth/check_token
+      jwt:
+        key-uri: ${auth-server.url}/oauth/token_key
+auth-server:
+  url : http://auth-server:1116/auth-server
+
+---
+
+spring:
+  profiles: docker
+auth-server:
+  url : http://auth-server:1116/auth-server
+
+---
+
+spring:
+  application:
+    name: api-gateway-bxi
+  profiles: docker-bxi
+auth-server:
+  url : http://auth-server:3002/auth-server
+server:
+  port: 3003

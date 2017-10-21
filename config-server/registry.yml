@@ -1,0 +1,30 @@
+server:
+  port: 1111
+  
+eureka:
+  instance:
+    hostname: ip-address
+    ipAddress: ip-address  
+    preferIpAddress: true
+    hostname: registry
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://registry:${server.port}/eureka/
+spring:
+  thymeleaf:
+    enabled: false 
+---
+spring:
+  profiles: docker
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://registry:1111/eureka/ 
+      
+---
+spring:
+  profiles: docker-bxi
+server:
+  port: 3004
