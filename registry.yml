@@ -3,8 +3,6 @@ server:
   
 eureka:
   instance:
-    hostname: ip-address
-    ipAddress: ip-address  
     preferIpAddress: true
     hostname: registry
   client:
