@@ -2,8 +2,8 @@ server:
   port: 8080
 eureka:
   instance:
-    hostname: ip-address
-    ipAddress: ip-address
+    hostname: ${ip.address}
+    ipAddress: ${ip.address}
     statusPageUrlPath: /api-gateway/info
     healthCheckUrlPath: /api-gateway/health    
     preferIpAddress: true

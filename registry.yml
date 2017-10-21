@@ -4,7 +4,8 @@ server:
 eureka:
   instance:
     preferIpAddress: true
-    hostname: registry
+    hostname: ${ip.address}
+    ipAddress: ${ip.address}
   client:
     registerWithEureka: false
     fetchRegistry: false

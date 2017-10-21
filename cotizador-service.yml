@@ -3,8 +3,8 @@ server:
   context-path: /cotizador-service
 eureka:
   instance:
-    hostname: ip-address
-    ipAddress: ip-address  
+    hostname: ${ip.address}
+    ipAddress: ${ip.address}
     statusPageUrlPath: /cotizador-service/info
     healthCheckUrlPath: /cotizador-service/health
     preferIpAddress: true
