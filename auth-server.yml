@@ -3,8 +3,8 @@ server:
   context-path: /auth-server
 eureka:
   instance:
-    hostname: ip-address
-    ipAddress: ip-address  
+    hostname: ${ip-address}
+    ipAddress: ${ip-address}
     statusPageUrlPath: /auth-server/info
     healthCheckUrlPath: /auth-server/health
     preferIpAddress: true
