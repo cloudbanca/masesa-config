@@ -2,10 +2,6 @@ server:
   port: 8080
 eureka:
   instance:
-    hostname: ${ip.address}
-    ipAddress: ${ip.address}
-    statusPageUrlPath: /api-gateway/info
-    healthCheckUrlPath: /api-gateway/health    
     preferIpAddress: true
   client:
     serviceUrl:
@@ -26,12 +22,21 @@ ribbon:
   ReadTimeout: 60000
 zuul:
   routes:
+    articles-service:
+      path: /api/articles-services/**
+      sensitive-headers: Cookie, Set-Cookie
     auth-server:
       path: /api/auth-server/**
+      sensitive-headers: Cookie, Set-Cookie
     cotizador-service:
       path: /api/cotizador-service/**
       sensitive-headers: Cookie, Set-Cookie
-
+    flow-service:
+      path: /api/flow-service/**
+      sensitive-headers: Cookie, Set-Cookie
+    prestamos-service:
+      path: /api/prestamos-service/**
+      sensitive-headers: Cookie, Set-Cookie
 security:
   basic:
     enabled: false
@@ -59,6 +64,10 @@ spring:
   profiles: docker
 auth-server:
   url : http://auth-server:1116/auth-server
+eureka:
+  instance:
+    hostname: ${byte.net.hostname:api-gateway}
+    ipAddress: ${byte.net.address}
 
 ---
 
@@ -70,3 +79,16 @@ auth-server:
   url : http://auth-server:3002/auth-server
 server:
   port: 3003
+eureka:
+  instance:
+    hostname: ${byte.net.hostname:api-gateway}
+    ipAddress: ${byte.net.address}
+
+---
+
+spring:
+  profiles: no-cookie
+eureka:
+  instance:
+    hostname: ${byte.net.hostname:api-gateway}
+    ipAddress: ${byte.net.address}

@@ -3,8 +3,6 @@ server:
   context-path: /auth-server
 eureka:
   instance:
-    hostname: ${ip.address}
-    ipAddress: ${ip.address}
     statusPageUrlPath: /auth-server/info
     healthCheckUrlPath: /auth-server/health
     preferIpAddress: true
@@ -17,26 +15,10 @@ spring:
   application:
     name: auth-server
   datasource:
-    auth:
-      url: jdbc:mysql://${datasource.ip}:${datasource.port:3306}/auth?autoReconnect=true
-      username: ${datasource.username}
-      password: ${datasource.password}
-      driver-class-name: com.mysql.jdbc.Driver
-    users:
-      url: jdbc:mysql://${datasource.ip}:${datasource.port:3306}/users?autoReconnect=true
-      username: ${datasource.username}
-      password: ${datasource.password}
-      driver-class-name: com.mysql.jdbc.Driver
-    profiles:
-      url: jdbc:mysql://${datasource.ip}:${datasource.port:3306}/profiles?autoReconnect=true
-      username: ${datasource.username}
-      password: ${datasource.password}
-      driver-class-name: com.mysql.jdbc.Driver
-    roles:
-      url: jdbc:mysql://${datasource.ip}:${datasource.port:3306}/roles?autoReconnect=true
-      username: ${datasource.username}
-      password: ${datasource.password}
-      driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${db.local.host:XXXXX}:${db.local.port:3306}/${db.local.schema:seguridad}
+    username: ${db.local.user:username}
+    password: ${db.local.password:password}
+    driver-class-name: com.mysql.jdbc.Driver
     tomcat:
       initial-size: 10
       min-idle: 15
@@ -63,6 +45,7 @@ security:
       token-info-uri: ${auth-server.url}/oauth/check_token
       jwt:
         key-uri: ${auth-server.url}/oauth/token_key
+      filter-order: 3
 auth-server:
   url: http://auth-server:1116/auth-server
   access-token-validity-seconds: 300000
@@ -76,6 +59,11 @@ auth-server:
     keystore: auth-server.jks
     storepass: auth-server
     alias: auth-alias
+  iseries:
+    enabled: false
+    host: ${db.core.host:XXXXXXX}
+    user: ${db.core.user:XXXXXXX}
+    password: ${db.core.password:XXXXXXX}
 liquibase:
   context: production
 
@@ -85,16 +73,5 @@ spring:
   profiles: docker
 eureka:
   instance:
-    hostname: auth-server
-auth-server:
-  url : http://auth-server:1116/auth-server
-  access-token-validity-seconds: 300
-  refresh-token-validity-seconds: 600
-  authentication:
-    failed-login-attempts: 3
-    days-validity-password: 10
-    user-inactivity-days: 10
-  jwt:
-    keystore: auth-server.jks
-    storepass: auth-server
-    alias: auth-alias
+    hostname: ${byte.net.hostname:auth-server}
+    ipAddress: ${byte.net.address}

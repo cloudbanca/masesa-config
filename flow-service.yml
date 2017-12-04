@@ -1,5 +1,5 @@
 server:
-  port: 5003
+  port: 5002
   context-path: /v1
 eureka:
   instance:
@@ -12,8 +12,13 @@ eureka:
     serviceUrl:
       defaultZone: http://registry:1111/eureka/
 spring:
+  data:
+    neo4j:
+      uri: bolt://${db.host:localhost}
+      username: ${db.user:neo4j}
+      password: ${db.password:toor}
   application:
-    name: cotizador-service
+    name: flow-service
 security:
   basic:
     enabled: false
@@ -29,15 +34,14 @@ logging:
 byte:
   swagger:
     api:
-      title: Cotizador Service
-      description: Documentacion API REST para cotizaciones
+      title: Flow Service
+      description: Documentacion API REST para flujos
       terms-of-service-url: http://www.bytesw.com
       license: Byte
       license-url: http://www.bytesw.com
       version: 1.0.0
       paths:
-        - /puntoDeVenta.*
-        - /distribuidor.*
+        - /flow.*
 
 ---
 
@@ -45,7 +49,7 @@ spring:
   profiles: docker
 eureka:
   instance:
-    hostname: ${byte.net.hostname:cotizador-service}
+    hostname: ${byte.net.hostname:flow-service}
     ipAddress: ${byte.net.address}
   client:
     serviceUrl:
