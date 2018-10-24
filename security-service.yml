@@ -1,0 +1,117 @@
+server:
+  port: ${port:1119}
+  context-path: /v1
+  compression:
+    enabled: true
+    mime-types: text/html, text/xml, text/plain, text/css, application/javascript, application/json
+    min-response-size: 1024
+eureka:
+  instance:
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /health
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://registry:1111/eureka/
+spring:
+  application:
+    name: security-service
+  datasource:
+    url: jdbc:mysql://${db.host:172.16.10.160}:${db.port:3306}/${db.schema:seguridad}
+    username: ${db.user:byteuser}
+    password: ${db.password:bu}
+    driver-class-name: com.mysql.jdbc.Driver
+    tomcat:
+      initial-size: ${db.pool.initial-size:10}
+      min-idle: ${db.pool.min-idle:15}
+      max-idle: ${db.pool.max-idle:20}
+      max-active: ${db.pool.max-active:30}
+      test-on-borrow:  ${db.pool.test-on-borrow:true}
+      remove-abandoned: ${db.pool.remove-abandoned:true}
+      remove-abandoned-timeout: ${db.pool.remove-abandoned-timeout:35}
+      validation-query: ${db.pool.validation-query:select 1}
+      validation-interval: ${db.pool.validation-inteval:30000}
+      time-between-eviction-runs-millis: ${db.pool.time-between-eviction-runs-millis:40000}
+      min-evictable-idle-time-millis: ${db.pool.min-evictable-idle-time-millis:60000}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: ${db.jpa.show-sql:true}
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.generate_statistics: false
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      id: api
+      token-info-uri: ${auth-server.url}/oauth/check_token
+      jwt:
+        key-uri: ${auth-server.url}/oauth/token_key
+auth-server:
+  url: http://api-gateway:8080/api/auth-server/auth-server
+logging:
+  level:
+    org.hibernate: INFO
+    org.springframework: INFO
+liquibase:
+  change-log: classpath:dbchangelog.xml
+  contexts: ${migration.context:production}
+  enabled: ${migration.enabled:true}
+byte:
+  swagger:
+    api:
+      enabled: ${swagger.enabled:true}
+      title: Security Service
+      description: Documentation of the security API's
+      terms-of-service-url: http://www.bytesw.com
+      license: Byte
+      license-url: http://www.bytesw.com
+      version: 1.0.0
+      paths:
+        - /users.*
+        - /roles.*
+        - /resources.*
+  resource:
+    config:
+      enabled: ${resource.security.enabled:true}
+      security:
+        -
+          pattern: /users/updatePassword
+          access: permitAll
+        -
+          pattern: /users/**
+          roles:
+            - ADMIN
+        -
+          pattern: /roles/**
+          roles:
+            - ADMIN
+        -
+          pattern: /resources/**
+          roles:
+            - ADMIN
+  encrypt:
+    config:
+      enabled: ${encrypt.enabled:true}
+      hash-encoder: ${encrypt.encoder:argon2}
+      assymetric-encoder: ${encrypt.encoder:public_key}
+      keystore: ${assymetric-key.keystore:auth-server.jks}
+      passphrase: ${assymetric-key.passphrase:auth-server}
+      alias: ${assymetric-key.alias:auth-alias}
+---
+
+spring:
+  profiles: test
+server:
+  port: 0
+
+---
+
+spring:
+  profiles: docker
+eureka:
+  instance:
+    hostname: ${byte.net.hostname:security-service}
+    ipAddress: ${byte.net.address}
