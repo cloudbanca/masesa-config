@@ -1,0 +1,152 @@
+server:
+  port: ${port:6001}
+  context-path: /v1
+  compression:
+      enabled: true
+      mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+      min-response-size: 1024
+eureka:
+  instance:
+    statusPageUrlPath: /v1/info
+    healthCheckUrlPath: /v1/health
+    preferIpAddress: true
+    metadata-map:
+      management.context-path: /v1
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.zone:http://registry:1111/eureka/}
+spring:
+  application:
+    name: plataforma-services
+  datasource:
+    url: jdbc:as400://${db.host:172.16.10.240}/;libraries=${db.schema:CLBT54DAT};prompt=false
+    username: ${db.user:PLATAFORMA}
+    password: ${db.password:PLATAFORMA}
+    driver-class-name: com.ibm.as400.access.AS400JDBCDriver
+    tomcat:
+      initial-size: ${db.pool.initial-size:10}
+      min-idle: ${db.pool.min-idle:15}
+      max-idle: ${db.pool.max-idle:20}
+      max-active: ${db.pool.max-active:30}
+      test-on-borrow: ${db.pool.test-on-borrow:true}
+      remove-abandoned: ${db.pool.remove-abandoned:true}
+      remove-abandoned-timeout: ${db.pool.remove-abandoned-timeout:35}
+      validation-query: ${db.pool.validation-query:select * from sysibm.sysdummy1}
+      validation-interval: ${db.pool.validation-inteval:30000}
+      time-between-eviction-runs-millis: ${db.pool.time-between-eviction-runs-millis:40000}
+      min-evictable-idle-time-millis: ${db.pool.min-evictable-idle-time-millis:60000}
+  jpa:
+    database-platform: org.hibernate.dialect.DB2AS400Dialect
+    show-sql: ${db.jpa.show-sql:true}
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.generate_statistics: false
+      hibernate.dialect: org.hibernate.dialect.DB2AS400Dialect
+  jmx:
+    enabled: false
+  aop:
+    proxy-target-class: true
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      id: api
+      token-info-uri: ${auth-server.url}/oauth/check_token
+      jwt:
+        key-uri: ${auth-server.url}/oauth/token_key
+auth-server:
+  url: http://auth-server:1116/auth-server
+logging:
+  level:
+    org.hibernate: ${log.level.hibernate:INFO}
+    org.springframework: ${log.level.spring:INFO}
+    com.netflix.discovery.shared.resolver.aws: ${log.level.netflix.eureka.aws:OFF}
+    springfox.documentation.spring.web: ${log.level.springfox:OFF}
+web-app:
+  auth:
+    prefer-encoder: false
+    access-token-validity-seconds: 43200
+    refresh-token-validity-seconds: 2592000
+  jndi:
+    as400-host: ${mq.host:172.16.10.240}
+    as400-user: ${mq.user:PLATAFORMA}
+    as400-pass: ${mq.password:PLATAFORMA}
+  queue:
+    lib: ${mq.library.default:DPBP53DTQ}
+    lib-huella-foto: ${mq.library.fingerprint:DPBP53DTQ}
+    time-out: ${mq.timeout:30}
+    input-forma-en-blanco: ${mq.queue.forms.input:PLTFORI}
+    input-huella: ${mq.queue.fingerprint.input:FYHDQO}
+    input-debito-por-apertura: ${mq.queue.opening-deposit.input:PLATADMI}
+    input-autorizacion-remota: ${mq.queue.remote-auth.input:PLAUTRI}
+    input-genera-indice: ${mq.queue.generate.index:PLGIDXI}
+    input-core-messages: ${mq.queue.core.message.input:PLVALMEI}
+    input-read-core-messages: ${mq.queue.core.message.read.input:PLACTMEN}
+    output-forma-en-blanco: ${mq.queue.forms.output:PLTFORO}
+    output-huella: ${mq.queue.fingerprint.output:FYHDQI}
+    output-debito-por-apertura: ${mq.queue.opening-deposit.output:PLATADMO}
+    output-autorizacion-remota: ${mq.queue.remote-auth.output:PLAUTRO}
+    output-core-messages: ${mq.queue.core.message.output:PLVALMEO}
+  keystore:
+    name: plataforma.jks
+    password: PLATAFORMA
+    alias-name: plataforma-alias
+    alias-password: PLATAFORMA-ALIAS
+  options:
+    enable-electronic-account: ${app.options.enable-electronic-account:true}
+byte:
+  swagger:
+    api:
+      enabled: ${swagger.enabled:true}
+      title: Plataforma Service
+      description: Documentacion API REST para plataforma
+      terms-of-service-url: http://www.bytesw.com
+      license: Byte
+      license-url: http://www.bytesw.com
+      version: 1.0.0
+      paths:
+        - /api.*
+  resource:
+    config:
+      enabled: ${resource.security.enabled:true}
+      security:
+        -
+          pattern: /api/**
+          roles:
+            - ADMIN
+  conductor:
+    client:
+      workflow:
+        interval: ${orchestrator.client.interval:500}
+        autopolling: ${orchestrator.client.autopolling:true}
+      root-uri: ${orchestrator.client.uri:http://conductor:8081/api/}
+
+---
+
+spring:
+  profiles: test
+server:
+  port: 0
+
+---
+
+spring:
+  profiles: swagger
+byte:
+  swagger:
+    api:
+      enabled: ${swagger.enabled:true}
+  resource:
+    config:
+      enabled: ${resource.security.enabled:false}
+
+---
+
+spring:
+  profiles: docker
+eureka:
+  instance:
+    hostname: ${byte.net.hostname:plataforma-services}
+    ipAddress: ${byte.net.address}
