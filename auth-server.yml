@@ -1,5 +1,5 @@
 server:
-  port: 1116
+  port: ${port:1116}
   context-path: /auth-server
 eureka:
   instance:
@@ -15,27 +15,29 @@ spring:
   application:
     name: auth-server
   datasource:
-    url: jdbc:mysql://${db.local.host:XXXXX}:${db.local.port:3306}/${db.local.schema:seguridad}
-    username: ${db.local.user:username}
-    password: ${db.local.password:password}
+    url: jdbc:mysql://${db.local.host:172.16.10.160}:${db.local.port:3306}/${db.local.schema:seguridad}?autoReconnect=true
+    username: ${db.local.user:byteuser}
+    password: ${db.local.password:bu}
     driver-class-name: com.mysql.jdbc.Driver
     tomcat:
-      initial-size: 10
-      min-idle: 15
-      max-idle: 20
-      max-active: 30
-      test-on-borrow: true
-      remove-abandoned: true
-      remove-abandoned-timeout: 35
-      validation-query: select 1
-      validation-interval: 30000
-      time-between-eviction-runs-millis: 40000
-      min-evictable-idle-time-millis: 60000
+      initial-size: ${db.pool.initial-size:10}
+      min-idle: ${db.pool.min-idle:15}
+      max-idle: ${db.pool.max-idle:20}
+      max-active: ${db.pool.max-active:30}
+      test-on-borrow:  ${db.pool.test-on-borrow:true}
+      remove-abandoned: ${db.pool.remove-abandoned:true}
+      remove-abandoned-timeout: ${db.pool.remove-abandoned-timeout:35}
+      validation-query: ${db.pool.validation-query:select 1}
+      validation-interval: ${db.pool.validation-inteval:30000}
+      time-between-eviction-runs-millis: ${db.pool.time-between-eviction-runs-millis:40000}
+      min-evictable-idle-time-millis: ${db.pool.min-evictable-idle-time-millis:60000}
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
-    show-sql: true
+    show-sql: ${db.jpa.show-sql:true}
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate.generate_statistics: false
 security:
   basic:
     enabled: false
@@ -51,21 +53,43 @@ auth-server:
   access-token-validity-seconds: 300000
   refresh-token-validity-seconds: 600000
   authentication:
-    enabled: true
-    failed-login-attempts: 3
-    days-validity-password: 10
-    user-inactivity-days: 10
-  jwt:
-    keystore: auth-server.jks
-    storepass: auth-server
-    alias: auth-alias
+    enabled: ${auth.enabled:true}
+    failed-login-attempts: ${auth.failed-attempts:3}
+    days-validity-password: ${auth.validity-password:10}
+    user-inactivity-days: ${auth.user-inactivity:10}
   iseries:
-    enabled: false
-    host: ${db.core.host:XXXXXXX}
-    user: ${db.core.user:XXXXXXX}
-    password: ${db.core.password:XXXXXXX}
+    enabled: ${db.core.enabled:true}
+    host: ${db.core.host:172.16.10.240}
+    user: ${db.core.user:PLATAFORMA}
+    password: ${db.core.password:PLATAFORMA}
+logging:
+  level:
+    org.hibernate: ${log.level.hibernate:INFO}
+    org.springframework: ${log.level.spring:INFO}
+    com.netflix.discovery.shared.resolver.aws: ${log.level.netflix.eureka.aws:OFF}
+    springfox.documentation.spring.web: ${log.level.springfox:OFF}
 liquibase:
-  context: production
+  context: ${migration.context:production}
+byte:
+  swagger:
+    api:
+      enabled: ${swagger.enabled:false}
+      title: auth-server
+      description: Documentation of the auth-server API's
+      terms-of-service-url: http://www.bytesw.com
+      license: Byte
+      license-url: http://www.bytesw.com
+      version: 1.0.0
+      paths:
+        - /oauth/.*
+  encrypt:
+    config:
+      enabled: ${encrypt.enabled:true}
+      hash-encoder: ${encrypt.encoder:argon2}
+      assymetric-encoder: ${encrypt.encoder:public_key}
+      keystore: ${assymetric-key.keystore:auth-server.jks}
+      passphrase: ${assymetric-key.passphrase:auth-server}
+      alias: ${assymetric-key.alias:auth-alias}
 
 ---
 
