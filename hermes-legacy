@@ -106,7 +106,7 @@ byte:
             - ADMIN
 
 liquibase:
-  change-log: classpath:/dbchangelog.xml
+  change-log: classpath:dbchangelog.xml
   contexts: ${migration.context:production}
   enabled: ${migration.enabled:true}
 
