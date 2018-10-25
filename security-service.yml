@@ -12,7 +12,7 @@ eureka:
     preferIpAddress: true
   client:
     serviceUrl:
-      defaultZone: http://registry:1111/eureka/
+      defaultZone: http://172.31.0.46:1111/eureka/
 spring:
   application:
     name: security-service
@@ -50,7 +50,7 @@ security:
       jwt:
         key-uri: ${auth-server.url}/oauth/token_key
 auth-server:
-  url: http://api-gateway:8080/api/auth-server/auth-server
+  url: http://172.31.0.46:8080/api/auth-server/auth-server
 logging:
   level:
     org.hibernate: INFO
