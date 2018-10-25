@@ -1,0 +1,163 @@
+server:
+  port: ${port:1120}
+  context-path: /v1
+  compression:
+    enabled: true
+    mime-types: text/html, text/xml, text/plain, text/css, application/javascript, application/json
+    min-response-size: 1024
+eureka:
+  instance:
+    statusPageUrlPath: /v1/info
+    healthCheckUrlPath: /v1/health
+    preferIpAddress: true
+    metadata-map:
+      management.context-path: /v1
+  client:
+    serviceUrl:
+      defaultZone: http://172.31.0.46:1111/eureka
+spring:
+  application:
+    name: hermes
+  datasource:
+      url: jdbc:mysql://${db.host:172.16.10.160}:${db.port:3306}/${db.schema:hermes}
+      username: ${db.user:byteuser}
+      password: ${db.password:bu}
+      driver-class-name: com.mysql.jdbc.Driver
+      tomcat:
+        initial-size: ${db.pool.initial-size:10}
+        min-idle: ${db.pool.min-idle:15}
+        max-idle: ${db.pool.max-idle:20}
+        max-active: ${db.pool.max-active:30}
+        test-on-borrow: ${db.pool.test-on-borrow:true}
+        remove-abandoned: ${db.pool.remove-abandoned:true}
+        remove-abandoned-timeout: ${db.pool.remove-abandoned-timeout:35}
+        validation-query: ${db.pool.validation-query:select 1}
+        validation-interval: ${db.pool.validation-inteval:30000}
+        time-between-eviction-runs-millis: ${db.pool.time-between-eviction-runs-millis:40000}
+        min-evictable-idle-time-millis: ${db.pool.min-evictable-idle-time-millis:60000}
+  jpa:
+     database-platform: org.hibernate.dialect.MySQLDialect
+     show-sql: ${db.jpa.show-sql:true}
+     hibernate:
+       ddl-auto: none
+  mail:
+    host: ${mail.host:172.16.20.209}
+    port: ${mail.port:25}
+    protocol: ${mail.protocol:smtp}
+    properties:
+      mail.smtp.auth: ${mail.auth:false}
+      mail.smtp.starttls.enable: ${mail.tls:false}
+      mail.debug: ${mail.debug:false}
+      mail.smtp.from: ${mail.smpt.from:BanpaisxInternet@banpais.hn}
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      id: api
+      token-info-uri: ${auth-server.url}/oauth/check_tocken
+      jwt:
+        key-uri: ${auth-server.url}/oauth/token_key
+auth-server:
+  url: http://172.31.0.46:1116/auth-server
+logging:
+  level:
+    org.hibernate: ${log.level.hibernate:INFO}
+    org.springframework: ${log.level.spring:INFO}
+    com.netflix.discovery.shared.resolver.aws: ${log.level.netflix.eureka.aws:OFF}
+    springfox.documentation.spring.web: ${log.level.springfox:OFF}
+byte:
+  swagger:
+    api:
+      enabled: ${swagger.enabled:true}
+      title: Hermes
+      description: Documentacion API REST para envio de notificaciones
+      terms-of-service-url: http://www.bytesw.com
+      license: Byte
+      license-url: http://www.bytesw.com
+      version: 1.0.0
+      paths:
+        - /email.*
+        - /devices.*
+        - /notification.*
+        - /applications.*
+        - /deviceTypes.*
+  resource:
+    config:
+      enabled: ${resource.security.enabled:false}
+      security:
+        -
+          pattern: /email/**
+          access: ${byte.resource.access:permitAll}
+          roles:
+            - ADMIN
+        -
+          pattern: /devices/**
+          access: ${byte.resource.access:permitAll}
+          roles:
+            - ADMIN
+        -
+          pattern: /notification/**
+          access: ${byte.resource.access:permitAll}
+          roles:
+            - ADMIN
+
+liquibase:
+  change-log: classpath:/dbchangelog.xml
+  contexts: ${migration.context:production}
+  enabled: ${migration.enabled:true}
+
+hermes:
+  config:
+    firebase:
+      key: ${hermes.firebase.key:serviceAccountKey.json}
+      url: ${hermes.firebase.url:https://abastos-genesis.firebaseio.com}
+
+
+---
+
+spring:
+  profiles: test
+server:
+  port: 0
+
+---
+
+spring:
+  profiles: gmail-test
+  mail:
+    host: ${mail.host:smtp.gmail.com}
+    port: ${mail.port:465}
+    protocol: ${mail.protocol:smtp}
+    username: ${mail.username:bytesw2018@gmail.com}
+    password: ${mail.password:Byte2018}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.required: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      mail.smtp.socketFactory.fallback: false
+      mail.smtp.socketFactory.port: ${mail.smtp.socketFactory.port:465}
+eureka:
+  instance:
+    hostname: ${byte.net.hostname:hermes}
+    ipAddress: ${byte.net.address}
+
+---
+
+spring:
+  profiles: test
+server:
+  port: 0
+
+---
+
+spring:
+  profiles: docker
+eureka:
+  instance:
+    hostname: ${byte.net.hostname:hermes}
+    ipAddress: ${byte.net.address}
