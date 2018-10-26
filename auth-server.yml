@@ -58,7 +58,7 @@ auth-server:
     days-validity-password: ${auth.validity-password:10}
     user-inactivity-days: ${auth.user-inactivity:10}
   iseries:
-    enabled: ${db.core.enabled:true}
+    enabled: ${db.core.enabled:false}
     host: ${db.core.host:172.16.10.240}
     user: ${db.core.user:PLATAFORMA}
     password: ${db.core.password:PLATAFORMA}
