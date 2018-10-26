@@ -14,7 +14,7 @@ eureka:
       management.context-path: /v1
   client:
     serviceUrl:
-      defaultZone: ${eureka.zone:http://registry:1111/eureka/}
+      defaultZone: http://registry:1111/eureka/
 spring:
   application:
     name: plataforma-services
