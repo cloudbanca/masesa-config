@@ -141,10 +141,6 @@ spring:
       mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
       mail.smtp.socketFactory.fallback: false
       mail.smtp.socketFactory.port: ${mail.smtp.socketFactory.port:465}
-eureka:
-  instance:
-    hostname: ${byte.net.hostname:hermes}
-    ipAddress: ${byte.net.address}
 
 ---
 
