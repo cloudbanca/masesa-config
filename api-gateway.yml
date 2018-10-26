@@ -40,6 +40,12 @@ zuul:
     security-service:
       path: /api/security-service/**
       sensitive-headers: Cookie, Set-Cookie
+    prestamos-service-new:
+      path: /api/prestamos-service-new/**
+      sensitive-headers: Cookie, Set-Cookie
+    hermes:
+      path: /api/hermes/**
+      sensitive-headers: Cookie, Set-Cookie
 security:
   basic:
     enabled: false
