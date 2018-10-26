@@ -34,6 +34,9 @@ zuul:
     flow-service:
       path: /api/flow-service/**
       sensitive-headers: Cookie, Set-Cookie
+    form-service:
+      path: /api/form-service/**
+      sensitive-headers: Cookie, Set-Cookie
     prestamos-service:
       path: /api/prestamos-service/**
       sensitive-headers: Cookie, Set-Cookie
