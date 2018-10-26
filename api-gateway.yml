@@ -37,6 +37,9 @@ zuul:
     prestamos-service:
       path: /api/prestamos-service/**
       sensitive-headers: Cookie, Set-Cookie
+    security-service:
+      path: /api/security-service/**
+      sensitive-headers: Cookie, Set-Cookie
 security:
   basic:
     enabled: false
