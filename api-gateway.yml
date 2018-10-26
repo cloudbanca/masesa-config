@@ -64,6 +64,9 @@ zuul:
     security-service:
       path: /api/security-service/**
       sensitive-headers: Cookie, Set-Cookie
+    manager:
+      path: /manager/**
+      url: http://seguridad-demo.bytesw.cloud.s3-website-us-east-1.amazonaws.com
 security:
   basic:
     enabled: false
