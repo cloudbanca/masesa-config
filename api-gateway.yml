@@ -23,7 +23,7 @@ ribbon:
 zuul:
   routes:
     articles-service:
-      path: /api/articles-services/**
+      path: /api/articles-service/**
       sensitive-headers: Cookie, Set-Cookie
     auth-server:
       path: /api/auth-server/**
