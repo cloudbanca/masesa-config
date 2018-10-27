@@ -6,6 +6,8 @@ server:
       mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
       min-response-size: 1024
 eureka:
+  enable: true
+  enabled: true
   instance:
     statusPageUrlPath: /v1/info
     healthCheckUrlPath: /v1/health
@@ -14,7 +16,7 @@ eureka:
       management.context-path: /v1
   client:
     serviceUrl:
-      defaultZone: http://registry:1111/eureka/
+      defaultZone: http://172.31.0.46:1111/eureka/
 spring:
   application:
     name: plataforma-services
