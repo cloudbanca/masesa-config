@@ -81,7 +81,7 @@ zuul:
       url: http://pre-cobranza.s3-website-us-east-1.amazonaws.com
     habitat:
       path: /habitat/**
-      url: http://pre-cobranza.s3-website-us-east-1.amazonaws.com
+      url: http://cotizador-habitat.bytesw.cloud.s3-website-us-east-1.amazonaws.com
     assets:
       path: /assets/**
       url: http://shared-assets-cotizador.bytesw.cloud.s3-website-us-east-1.amazonaws.com
