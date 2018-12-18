@@ -34,8 +34,14 @@ zuul:
     cotizador-service:
       path: /api/cotizador-service/**
       sensitive-headers: Cookie, Set-Cookie
+    cotizador-service-habitat:
+      path: /api/cotizador-service-habitat/**
+      sensitive-headers: Cookie, Set-Cookie
     flow-service:
       path: /api/flow-service/**
+      sensitive-headers: Cookie, Set-Cookie
+    flow-service-habitat:
+      path: /api/flow-service-habitat/**
       sensitive-headers: Cookie, Set-Cookie
     form-service:
       path: /api/form-service/**
@@ -63,6 +69,9 @@ zuul:
       sensitive-headers: Cookie, Set-Cookie
     search-service:
       path: /api/search-service/**
+      sensitive-headers: Cookie, Set-Cookie
+    search-service-habitat:
+      path: /api/search-service-habitat/**
       sensitive-headers: Cookie, Set-Cookie
     security-service:
       path: /api/security-service/**
