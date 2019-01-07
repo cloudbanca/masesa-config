@@ -9,6 +9,7 @@ eureka:
     metadata-map:
       management.context-path: /auth-server
   client:
+    enabled: true
     serviceUrl:
       defaultZone: http://registry:1111/eureka/
 spring:
