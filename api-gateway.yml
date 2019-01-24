@@ -91,6 +91,9 @@ zuul:
     habitat:
       path: /habitat/**
       url: http://cotizador-habitat.bytesw.cloud.s3-website-us-east-1.amazonaws.com
+    habitat-2:
+      path: /habitat-2/**
+      url: http://cotizador-habitat-2.bytesw.cloud.s3-website-us-east-1.amazonaws.com
     assets:
       path: /assets/**
       url: http://shared-assets-cotizador.bytesw.cloud.s3-website-us-east-1.amazonaws.com
