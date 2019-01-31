@@ -28,6 +28,9 @@ zuul:
     auth-server:
       path: /api/auth-server/**
       sensitive-headers: Cookie, Set-Cookie
+    catalog-service:
+      path: /api/catalog-service/**
+      sensitive-headers: Cookie, Set-Cookie
     cobranza-service:
       path: /api/cobranza-service/**
       sensitive-headers: Cookie, Set-Cookie
@@ -36,6 +39,12 @@ zuul:
       sensitive-headers: Cookie, Set-Cookie
     cotizador-service-habitat:
       path: /api/cotizador-service-habitat/**
+      sensitive-headers: Cookie, Set-Cookie
+    definitions-service:
+      path: /api/definitions-service/**
+      sensitive-headers: Cookie, Set-Cookie
+    transaction-catalog-service:
+      path: /api/transaction-catalog-service/**
       sensitive-headers: Cookie, Set-Cookie
     flow-service:
       path: /api/flow-service/**
