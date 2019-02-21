@@ -132,8 +132,8 @@ spring:
     host: ${mail.host:smtp.gmail.com}
     port: ${mail.port:465}
     protocol: ${mail.protocol:smtp}
-    username: ${mail.username:nibble@bytesw.com}
-    password: ${mail.password:password}
+    username: ${mail.username:bytesw2018@gmail.com}
+    password: ${mail.password:Byte2018}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.required: true
