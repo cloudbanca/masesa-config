@@ -40,6 +40,9 @@ zuul:
     cotizador-service-habitat:
       path: /api/cotizador-service-habitat/**
       sensitive-headers: Cookie, Set-Cookie
+    cotizador-service-habitat2:
+      path: /api/cotizador-service-habitat2/**
+      sensitive-headers: Cookie, Set-Cookie
     definitions-service:
       path: /api/definitions-service/**
       sensitive-headers: Cookie, Set-Cookie
