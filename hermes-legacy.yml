@@ -69,6 +69,9 @@ logging:
     org.springframework: ${log.level.spring:INFO}
     com.netflix.discovery.shared.resolver.aws: ${log.level.netflix.eureka.aws:OFF}
     springfox.documentation.spring.web: ${log.level.springfox:OFF}
+    com.sun.mail: ${log.level.mail:TRACE}
+    com.sun.mail.smtp: ${log.level.mail:TRACE}
+    com.sun.mail.smtp.protocol: ${log.level.mail:TRACE}
 byte:
   swagger:
     api:
@@ -133,7 +136,7 @@ spring:
     port: ${mail.port:465}
     protocol: ${mail.protocol:smtp}
     username: ${mail.username:bytesw2018@gmail.com}
-    password: ${mail.password:Byte2018}
+    password: ${mail.password:lgezwrykpcokgltz}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.required: true
