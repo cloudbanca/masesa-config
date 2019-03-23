@@ -20,13 +20,22 @@ spring:
     password: ${db.password:V5APPLSVR}
     driver-class-name: net.sourceforge.jtds.jdbc.Driver
     tomcat:
-      test-on-borrow: true
-      remove-abandoned: true
-      validation-query: select 1
+      initial-size: ${db.pool.initial-size:10}
+      min-idle: ${db.pool.min-idle:15}
+      max-idle: ${db.pool.max-idle:20}
+      max-active: ${db.pool.max-active:30}
+      test-on-borrow: ${db.pool.test-on-borrow:true}
+      remove-abandoned: ${db.pool.remove-abandoned:true}
+      remove-abandoned-timeout: ${db.pool.remove-abandoned-timeout:90}
+      validation-query: ${db.pool.validation-query:select * from sysibm.sysdummy1}
+      validation-interval: ${db.pool.validation-inteval:30000}
+      time-between-eviction-runs-millis: ${db.pool.time-between-eviction-runs-millis:40000}
+      min-evictable-idle-time-millis: ${db.pool.min-evictable-idle-time-millis:60000}
   activemq:
     user: system
     password: manager
     broker-url: tcp://${mq.host:172.16.10.181}:${mq.port:61616}
+    time: 70
   jpa:
     database-platform: org.hibernate.dialect.SQLServer2008Dialect
     show-sql: true
