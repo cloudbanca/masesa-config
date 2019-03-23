@@ -68,7 +68,7 @@ zuul:
       sensitive-headers: Cookie, Set-Cookie
     plataforma-services:
       path: /api/plataforma-services/**
-      sensitive-headers: Cookie, Set-Cookie
+      url: http://172.16.5.94:6001
     prestamos-service:
       path: /api/prestamos-service/**
       sensitive-headers: Cookie, Set-Cookie
