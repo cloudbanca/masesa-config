@@ -71,7 +71,7 @@ web-app:
       as400-pass: PLATAFORMA
     queue:
       lib: MACARTDAT
-      time-out: 60
+      time-out: 70
 
 byte:
   swagger:
