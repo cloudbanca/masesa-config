@@ -16,15 +16,15 @@ eureka:
       management.context-path: /v1
   client:
     serviceUrl:
-      defaultZone: http://172.31.0.46:1111/eureka/
+      defaultZone: http://registry:1111/eureka/
 spring:
   application:
-    name: plataforma-services
+    name: plataforma-services-habitat
   datasource:
-    url: ${db.url:jdbc:sqlserver://172.16.10.228:1433;databaseName=MASESA}
-    username: ${db.user:V5APPLSVR}
-    password: ${db.password:V5APPLSVR}
-    driver-class-name: ${db.driver:com.microsoft.sqlserver.jdbc.SQLServerDriver}
+    url: jdbc:as400://${db.host:172.16.10.240}/;libraries=${db.schema:CLHABDAT};prompt=false
+    username: ${db.user:PLATAFORMA}
+    password: ${db.password:PLATAFORMA}
+    driver-class-name: ${db.driver:com.ibm.as400.access.AS400JDBCDriver}
     tomcat:
       initial-size: 10
       min-idle: 15
@@ -33,18 +33,18 @@ spring:
       test-on-borrow: true
       remove-abandoned: true
       remove-abandoned-timeout: 35
-      validation-query: select 1
+      validation-query: ${db.pool.validation-query:select * from sysibm.sysdummy1}
       validation-interval: 30000
       time-between-eviction-runs-millis: 40000
       min-evictable-idle-time-millis: 60000
   jpa:
-    database-platform: org.hibernate.dialect.SQLServer2008Dialect
+    database-platform: org.hibernate.dialect.DB2AS400Dialect
     show-sql: true
     hibernate:
       ddl-auto: none
     properties:
       hibernate.generate_statistics: false
-      hibernate.dialect: org.hibernate.dialect.SQLServer2008Dialect
+      hibernate.dialect: org.hibernate.dialect.DB2AS400Dialect
   jmx:
     enabled: false
   aop:
@@ -59,7 +59,7 @@ security:
       jwt:
         key-uri: ${auth-server.url}/oauth/token_key
 auth-server:
-  url: http://172.31.0.46:1116/auth-server
+   url: ${auth-server.service.url:http://cotizador-demo.bytesw.cloud:8080/api/auth-server/auth-server}
 logging:
   level:
     org.hibernate: ${log.level.hibernate:INFO}
@@ -148,5 +148,6 @@ spring:
   profiles: docker
 eureka:
   instance:
-    hostname: ${byte.net.hostname:plataforma-services}
-    ipAddress: ${byte.net.address}
+    hostname: ${byte.net.hostname:plataforma-services-habitat}
+    ipAddress: ${byte.net.address:172.16.5.94}
+
