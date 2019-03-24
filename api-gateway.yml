@@ -68,6 +68,7 @@ zuul:
       sensitive-headers: Cookie, Set-Cookie
     plataforma-services:
       path: /api/plataforma-services/**
+      url: http://cotizador-demo.bytesw.cloud:6001
       sensitive-headers: Cookie, Set-Cookie
     prestamos-service:
       path: /api/prestamos-service/**
