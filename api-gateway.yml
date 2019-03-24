@@ -14,14 +14,14 @@ hystrix:
     default:
       execution:
         timeout:
-          enabled: false
+          enabled: true
         isolation:
           strategy: THREAD
           thread:
             timeoutInMilliseconds: 600000
 ribbon:
-  ConnectTimeout: 30000
-  ReadTimeout: 600000
+  ConnectTimeout: 300000
+  ReadTimeout: 6000000
 zuul:
   routes:
     articles-service:
