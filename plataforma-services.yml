@@ -16,7 +16,7 @@ eureka:
       management.context-path: /v1
   client:
     serviceUrl:
-      defaultZone: http://registry:1111/eureka/
+      defaultZone: http://cotizador-demo.bytesw.cloud:1111/eureka/
 spring:
   application:
     name: plataforma-services-habitat
