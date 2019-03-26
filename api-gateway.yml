@@ -59,6 +59,7 @@ zuul:
       sensitive-headers: Cookie, Set-Cookie
     flow-service-habitat:
       path: /api/flow-service-habitat/**
+      url: http://172.16.5.93:5002
       sensitive-headers: Cookie, Set-Cookie
     form-service:
       path: /api/form-service/**
