@@ -74,8 +74,8 @@ web-app:
     as400-user: ${mq.user:PLATAFORMA}
     as400-pass: ${mq.password:PLATAFORMA}
   queue:
-    lib: ${mq.library.default:DPBP53DTQ}
-    lib-huella-foto: ${mq.library.fingerprint:DPBP53DTQ}
+    lib: ${mq.library.default:CAHABDAT}
+    lib-huella-foto: ${mq.library.fingerprint:CAHABDAT}
     time-out: ${mq.timeout:30}
     input-forma-en-blanco: ${mq.queue.forms.input:PLTFORI}
     input-huella: ${mq.queue.fingerprint.input:FYHDQO}
