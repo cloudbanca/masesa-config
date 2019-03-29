@@ -26,17 +26,19 @@ spring:
     password: ${db.password:PLATAFORMA}
     driver-class-name: ${db.driver:com.ibm.as400.access.AS400JDBCDriver}
     tomcat:
-      initial-size: 10
-      min-idle: 15
-      max-idle: 20
-      max-active: 30
-      test-on-borrow: true
-      remove-abandoned: true
-      remove-abandoned-timeout: 35
+      initial-size: ${db.pool.initial-size:1}
+      min-idle: ${db.pool.min-idle:1}
+      max-idle: ${db.pool.max-idle:10}
+      max-active: ${db.pool.max-active:30}
+      test-on-borrow: ${db.pool.test-on-borrow:true}
+      test-while-idle: ${db.pool.test-while-idle:true}
+      remove-abandoned: ${db.pool.remove-abandoned:true}
+      remove-abandoned-timeout: ${db.pool.remove-abandoned-timeout:30}
       validation-query: ${db.pool.validation-query:select * from sysibm.sysdummy1}
-      validation-interval: 30000
-      time-between-eviction-runs-millis: 40000
-      min-evictable-idle-time-millis: 60000
+      validation-query-timeout: ${db.pool.validation-query-timeout:5}
+      validation-interval: ${db.pool.validation-inteval:5000}
+      time-between-eviction-runs-millis: ${db.pool.time-between-eviction-runs-millis:5000}
+      min-evictable-idle-time-millis: ${db.pool.min-evictable-idle-time-millis:60000}
   jpa:
     database-platform: org.hibernate.dialect.DB2AS400Dialect
     show-sql: true
