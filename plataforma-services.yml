@@ -21,9 +21,9 @@ spring:
   application:
     name: plataforma-services-habitat
   datasource:
-    url: jdbc:as400://${db.host:190.115.5.119}/;libraries=${db.schema:CLHABDAT};prompt=false
-    username: ${db.user:BYTEWEB}
-    password: ${db.password:bytehabit}
+    url: jdbc:as400://${db.host:172.16.10.240}/;libraries=${db.schema:CLHABDAT};prompt=false
+    username: ${db.user:PLATAFORMA}
+    password: ${db.password:PLATAFORMA}
     driver-class-name: ${db.driver:com.ibm.as400.access.AS400JDBCDriver}
     tomcat:
       initial-size: ${db.pool.initial-size:1}
