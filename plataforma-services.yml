@@ -64,8 +64,8 @@ auth-server:
    url: ${auth-server.service.url:http://cotizador-demo.bytesw.cloud:8080/api/auth-server/auth-server}
 logging:
   level:
-    org.hibernate: ${log.level.hibernate:INFO}
-    org.springframework: ${log.level.spring:INFO}
+    org.hibernate: ${log.level.hibernate:TRACE}
+    org.springframework: ${log.level.spring:TRACE}
 web-app:
   auth:
     prefer-encoder: false
