@@ -58,6 +58,10 @@ zuul:
       path: /api/flow-service/**
       url: http://172.16.5.93:5002
       sensitive-headers: Cookie, Set-Cookie
+    flow-service-app:
+      path: /flow-service/**
+      url: http://172.16.5.93:5002
+      sensitive-headers: Cookie, Set-Cookie
     flow-service-habitat:
       path: /api/flow-service-habitat/**
       sensitive-headers: Cookie, Set-Cookie
