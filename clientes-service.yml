@@ -1,0 +1,159 @@
+server:
+  port: ${port:5009}
+  context-path: /v1
+  compression:
+    enabled: true
+    mime-types: text/html, text/xml, text/plain, text/css, application/javascript, application/json
+    min-response-size: 1024
+feign:
+  hystrix:
+    enabled: false
+  client:
+    config:
+      feignName:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+eureka:
+  instance:
+    statusPageUrlPath: /v1/info
+    healthCheckUrlPath: /v1/health
+    preferIpAddress: true
+    metadata-map:
+      management.context-path: /v1
+  client:
+    serviceUrl:
+      defaultZone: http://registry:1111/eureka/
+spring:
+  application:
+    name: clientes-service
+  datasource:
+    url: jdbc:as400://172.16.10.240/;libraries=${db.schema:CLHABAT};prompt=false
+    username: PLATAFORMA
+    password: PLATAFORMA
+    driver-class-name: com.ibm.as400.access.AS400JDBCDriver
+    tomcat:
+      initial-size: ${db.pool.initial-size:10}
+      min-idle: ${db.pool.min-idle:15}
+      max-idle: ${db.pool.max-idle:20}
+      max-active: ${db.pool.max-active:30}
+      test-on-borrow: ${db.pool.test-on-borrow:true}
+      remove-abandoned: ${db.pool.remove-abandoned:true}
+      remove-abandoned-timeout: ${db.pool.remove-abandoned-timeout:90}
+      validation-query: ${db.pool.validation-query:select * from sysibm.sysdummy1}
+      validation-interval: ${db.pool.validation-inteval:30000}
+      time-between-eviction-runs-millis: ${db.pool.time-between-eviction-runs-millis:40000}
+      min-evictable-idle-time-millis: ${db.pool.min-evictable-idle-time-millis:60000}
+  activemq:
+    user1: system
+    password1: manager
+    broker-url1: tcp://172.16.5.76:61616
+
+    user: admin
+    password: admin
+    broker-url: tcp://172.16.5.145:61616
+    time: 70
+    queueI: CATRXINPUT
+    queueO: CATRXOUT
+
+  jpa:
+    database-platform: org.hibernate.dialect.DB2400Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.use_sql_comments: true
+      hibernate.format_sql: true
+
+logging:
+  level:
+    com:
+      bytesw: DEBUG
+    org:
+      hibernate:
+        type: trace
+        sql: trace
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      id: api
+      token-info-uri: ${auth-server.url}/oauth/check_token
+      jwt:
+        key-uri: ${auth-server.url}/oauth/token_key
+auth-server:
+  url : http://auth-server:1116/auth-server
+web-app:
+    jndi:
+      as400-auth: 172.16.10.240
+      as400-host: 172.16.10.240
+      as400-user: PLATAFORMA
+      as400-pass: PLATAFORMA
+    queue:
+      lib: CLHABDAT
+      time-out: 70
+
+byte:
+  swagger:
+    api:
+      enabled: ${swagger.enabled:false}
+      title: Clientes Service
+      description: Documentacion API REST para modulo de clientes
+      terms-of-service-url: http://www.bytesw.com
+      license: Byte
+      license-url: http://www.bytesw.com
+      version: 1.0.0
+      paths:
+        - /clientes.*
+
+  resource:
+      config:
+        enabled: ${resource.security.enabled:false}
+        security:
+          -
+            pattern: /clientes/**
+            roles:
+              - ADMIN
+          -
+            pattern: /productos/**
+            roles:
+              - ADMIN
+          -
+            pattern: /catalogos/**
+            roles:
+            - ADMIN
+          -
+            pattern: /informacionCliente/**
+            roles:
+            - ADMIN
+  queue:
+    queuetrxi: NOMBREDELACOLA
+
+
+---
+
+spring:
+  profiles: docker
+eureka:
+  instance:
+    hostname: ${byte.net.hostname:clientes-service}
+    ipAddress: ${byte.net.address}
+
+---
+
+spring:
+  application:
+    name: cliente-swagger
+  profiles: swagger
+eureka:
+  instance:
+    hostname: ${byte.net.hostname:cliente-swagger}
+    ipAddress: ${byte.net.address}
+byte:
+  swagger:
+    api:
+      enabled: ${swagger.enabled:true}
+  resource:
+    config:
+      enabled: ${resource.security.enabled:false}
