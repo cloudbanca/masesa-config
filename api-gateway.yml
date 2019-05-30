@@ -30,6 +30,9 @@ zuul:
     articles-service:
       path: /api/articles-service/**
       sensitive-headers: Cookie, Set-Cookie
+    articles-service-habitat:
+      path: /api/articles-service-habitat/**
+      sensitive-headers: Cookie, Set-Cookie
     auth-server:
       path: /api/auth-server/**
       sensitive-headers: Cookie, Set-Cookie
@@ -73,6 +76,8 @@ zuul:
       sensitive-headers: Cookie, Set-Cookie
     maintenance-service:
       path: /api/maintenance-service/**
+    maintenance-service-habitat:
+      path: /api/maintenance-service-habitat/**
       sensitive-headers: Cookie, Set-Cookie
     plataforma-services:
       path: /api/plataforma-services/**
