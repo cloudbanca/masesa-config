@@ -108,7 +108,7 @@ zuul:
       path: /api/security-service/**
       sensitive-headers: Cookie, Set-Cookie
     storage-service:
-      path: /storage-service/**
+      path: /api/storage-service/**
       url: http://18.220.235.11:3000
     manager:
       path: /manager/**
