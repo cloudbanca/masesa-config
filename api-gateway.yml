@@ -72,10 +72,10 @@ zuul:
       path: /api/flow-service-habitat/**
       sensitive-headers: Cookie, Set-Cookie
     form-service:
-      path: /api/form-service/**
+      path: /form-service/**
       sensitive-headers: Cookie, Set-Cookie
     form-service-fallback:
-      path: /form-service/**
+      path: /api/form-service/**
       serviceId: form-service
       sensitive-headers: Cookie, Set-Cookie
     hermes:
