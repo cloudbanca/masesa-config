@@ -29,6 +29,7 @@ spring:
       remove-abandoned: ${db.pool.remove-abandoned:true}
       remove-abandoned-timeout: ${db.pool.remove-abandoned-timeout:35}
       validation-query: ${db.pool.validation-query:select 1}
+      validation-query-timeout: ${db.pool.validation-query-timeout:10}
       validation-interval: ${db.pool.validation-inteval:30000}
       time-between-eviction-runs-millis: ${db.pool.time-between-eviction-runs-millis:40000}
       min-evictable-idle-time-millis: ${db.pool.min-evictable-idle-time-millis:60000}
