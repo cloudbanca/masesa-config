@@ -74,6 +74,10 @@ zuul:
     form-service:
       path: /api/form-service/**
       sensitive-headers: Cookie, Set-Cookie
+    form-service-fallback:
+      path: /form-service/**
+      serviceId: form-service
+      sensitive-headers: Cookie, Set-Cookie
     hermes:
       path: /api/hermes/**
       sensitive-headers: Cookie, Set-Cookie
