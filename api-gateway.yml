@@ -96,6 +96,10 @@ zuul:
     prestamos-service-new:
       path: /api/prestamos-service-new/**
       sensitive-headers: Cookie, Set-Cookie
+    prestamos-service-new-fallback:
+      path: /prestamos-service-new/**
+      serviceId: prestamos-service-new
+      sensitive-headers: Cookie, Set-Cookie
     report-service:
       path: /api/report-service/**
       sensitive-headers: Cookie, Set-Cookie
