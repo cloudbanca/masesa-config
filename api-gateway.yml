@@ -128,6 +128,7 @@ zuul:
     plataforma:
       path: /plataforma/**
       url: http://cotizador-legacy.bytesw.cloud.s3-website.us-east-2.amazonaws.com
+      sensitive-headers: Origin
     geko:
       path: /geko/**
       url: http://cotizador-geko.bytesw.cloud.s3-website-us-east-1.amazonaws.com
