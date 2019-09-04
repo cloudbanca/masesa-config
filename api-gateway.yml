@@ -127,7 +127,7 @@ zuul:
       url: http://seguridad-demo.bytesw.cloud.s3-website-us-east-1.amazonaws.com
     plataforma:
       path: /plataforma/**
-      url: http://cotizador-demo.bytesw.cloud.s3-website-us-east-1.amazonaws.com
+      url: http://cotizador-legacy.bytesw.cloud.s3-website.us-east-2.amazonaws.com
     geko:
       path: /geko/**
       url: http://cotizador-geko.bytesw.cloud.s3-website-us-east-1.amazonaws.com
