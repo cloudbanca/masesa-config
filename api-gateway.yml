@@ -43,10 +43,10 @@ zuul:
       path: /api/clientes-service/**
       sensitive-headers: Cookie, Set-Cookie
     cobranza-service:
-      path: /api/cobranza-service/**
+      path: /cobranza-service/**
       sensitive-headers: Cookie, Set-Cookie
     cobranza-service-fallback:
-      path: /cobranza-service/**
+      path: /api/cobranza-service/**
       serviceId: cobranza-service
       sensitive-headers: Cookie, Set-Cookie
     cotizador-service:
