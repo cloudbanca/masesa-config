@@ -122,8 +122,8 @@ zuul:
     storage-service:
       path: /api/storage-service/**
       url: http://18.220.235.11:3000
-    manager:
-      path: /manager/**
+    manager2:
+      path: /manager2/**
       url: http://seguridad-demo.bytesw.cloud.s3-website-us-east-1.amazonaws.com
     plataforma:
       path: /plataforma/**
